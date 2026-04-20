@@ -149,7 +149,7 @@ int object_read(const ObjectID *id, ObjectType *type_out, void **data_out, size_
     memcpy(header, full, hlen);
     header[hlen] = '\0';
 
-    // 5. Parse type and size from header
+    // Phase 1: parse type string (blob/tree/commit) and data size from header
     char type_str[16];
     size_t data_size;
     if (sscanf(header, "%15s %zu", type_str, &data_size) != 2) {
