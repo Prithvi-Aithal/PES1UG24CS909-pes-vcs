@@ -107,7 +107,7 @@ static int write_tree_level(IndexEntry *entries, int count,
         const char *slash = strchr(rel, '/');
 
         if (!slash) {
-            // It's a file at this level
+            // Phase 2: file entry - add directly to current tree level
             TreeEntry *te = &tree.entries[tree.count++];
             te->mode = entries[i].mode;
             te->hash = entries[i].hash;
