@@ -115,22 +115,25 @@ int index_load(Index *index) {
 }
 
 int index_save(const Index *index) {
-    Index sorted = *index;
-    qsort(sorted.entries, sorted.count, sizeof(IndexEntry), cmp_entries);
+    Index *sorted = malloc(sizeof(Index));
+    if (!sorted) return -1;
+    *sorted = *index;
+    qsort(sorted->entries, sorted->count, sizeof(IndexEntry), cmp_entries);
     FILE *f = fopen(".pes/index.tmp", "w");
-    if (!f) { perror("index_save"); return -1; }
-    for (int i = 0; i < sorted.count; i++) {
+    if (!f) { perror("index_save"); free(sorted); return -1; }
+    for (int i = 0; i < sorted->count; i++) {
         char hex[65];
-        hash_to_hex(&sorted.entries[i].hash, hex);
+        hash_to_hex(&sorted->entries[i].hash, hex);
         fprintf(f, "%o %s %llu %u %s\n",
-                sorted.entries[i].mode, hex,
-                (unsigned long long)sorted.entries[i].mtime_sec,
-                sorted.entries[i].size,
-                sorted.entries[i].path);
+                sorted->entries[i].mode, hex,
+                (unsigned long long)sorted->entries[i].mtime_sec,
+                sorted->entries[i].size,
+                sorted->entries[i].path);
     }
     fflush(f);
     fsync(fileno(f));
     fclose(f);
+    free(sorted);
     return rename(".pes/index.tmp", INDEX_FILE);
 }
 
