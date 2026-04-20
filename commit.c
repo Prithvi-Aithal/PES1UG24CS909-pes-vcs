@@ -167,7 +167,7 @@ int commit_create(const char *message, ObjectID *commit_id_out) {
         c.has_parent = 0;
     }
 
-    // 3. Fill metadata
+    // Phase 4: fill author from PES_AUTHOR env, timestamp from time(NULL)
     strncpy(c.author, pes_author(), sizeof(c.author) - 1);
     c.timestamp = (uint64_t)time(NULL);
     strncpy(c.message, message, sizeof(c.message) - 1);
