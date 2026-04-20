@@ -47,7 +47,7 @@ int object_exists(const ObjectID *id) {
     return access(path, F_OK) == 0;
 }
 
-// ─── TODO IMPLEMENTATIONS ────────────────────────────────────────────────────
+// Phase 1: object_write builds header + data buffer, computes SHA-256 hash ────────────────────────────────────────────────────
 
 int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out) {
     // 1. Pick type string
