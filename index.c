@@ -25,7 +25,7 @@ int index_remove(Index *index, const char *path) {
                 memmove(&index->entries[i], &index->entries[i+1],
                         rem * sizeof(IndexEntry));
             index->count--;
-            return index_save(index);
+            return index_save(index); // Phase 3: persist updated index atomically after add
         }
     }
     fprintf(stderr, "error: '%s' is not in the index\n", path);
@@ -166,5 +166,5 @@ int index_add(Index *index, const char *path) {
     entry->size      = (uint32_t)st.st_size;
     memcpy(entry->path, path, 512);
     entry->path[511] = '\0';
-    return index_save(index);
+    return index_save(index); // Phase 3: persist updated index atomically after add
 }
