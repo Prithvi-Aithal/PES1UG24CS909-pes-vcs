@@ -131,7 +131,7 @@ int object_read(const ObjectID *id, ObjectType *type_out, void **data_out, size_
     close(fd);
     if (got != (ssize_t)full_len) { free(full); return -1; }
 
-    // 3. Verify integrity — recompute hash and compare
+    // Phase 1: integrity check - recompute hash and compare to filename — recompute hash and compare
     ObjectID computed;
     compute_hash(full, full_len, &computed);
     if (memcmp(computed.hash, id->hash, HASH_SIZE) != 0) {
