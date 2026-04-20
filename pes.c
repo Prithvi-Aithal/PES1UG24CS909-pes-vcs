@@ -68,6 +68,7 @@ void cmd_commit(int argc, char *argv[]) {
     }
     char hex[HASH_HEX_SIZE + 1];
     hash_to_hex(&id, hex);
+    // Phase 4: print first 12 chars of hash as short commit id
     printf("Committed: %.12s... %s\n", hex, msg);
 }
 
