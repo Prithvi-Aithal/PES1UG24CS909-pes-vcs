@@ -83,7 +83,7 @@ int tree_serialize(const Tree *tree, void **data_out, size_t *len_out) {
     return 0;
 }
 
-// ─── TODO IMPLEMENTATION ────────────────────────────────────────────────────
+// Phase 2: tree_from_index builds recursive tree hierarchy from staged files ────────────────────────────────────────────────────
 
 // Forward declaration
 int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out);
