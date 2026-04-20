@@ -88,7 +88,7 @@ int tree_serialize(const Tree *tree, void **data_out, size_t *len_out) {
 // Forward declaration
 int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out);
 
-// Recursive helper: build tree for entries whose paths start with `prefix`
+// Phase 2: write_tree_level handles one directory level recursively for entries whose paths start with `prefix`
 // prefix="" means root level
 static int write_tree_level(IndexEntry *entries, int count,
                              const char *prefix, ObjectID *id_out) {
