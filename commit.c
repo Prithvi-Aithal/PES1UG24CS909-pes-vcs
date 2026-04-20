@@ -146,7 +146,7 @@ int head_update(const ObjectID *new_commit) {
     return rename(tmp_path, target_path);
 }
 
-// ─── TODO IMPLEMENTATION ────────────────────────────────────────────────────
+// Phase 4: commit_create builds snapshot from index and writes commit object ────────────────────────────────────────────────────
 
 int commit_create(const char *message, ObjectID *commit_id_out) {
     // 1. Build tree from index
