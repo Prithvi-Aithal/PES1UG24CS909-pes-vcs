@@ -158,7 +158,7 @@ int commit_create(const char *message, ObjectID *commit_id_out) {
         return -1;
     }
 
-    // 2. Get parent commit if exists
+    // Phase 4: read parent hash from HEAD; first commit has no parent
     ObjectID parent;
     if (head_read(&parent) == 0) {
         c.has_parent = 1;
