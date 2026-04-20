@@ -72,7 +72,7 @@ int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out
     // 4. Compute hash of full object
     compute_hash(full, full_len, id_out);
 
-    // 5. Check deduplication
+    // Phase 1: deduplication - same content = same hash = skip write
     if (object_exists(id_out)) {
         free(full);
         return 0;
