@@ -180,7 +180,7 @@ int commit_create(const char *message, ObjectID *commit_id_out) {
     free(data);
     if (rc != 0) return -1;
 
-    // 5. Update HEAD to point to new commit
+    // Phase 4: head_update swings branch pointer atomically to new commit hash
     return head_update(commit_id_out);
 }
 
