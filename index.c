@@ -90,7 +90,7 @@ static int cmp_entries(const void *a, const void *b) {
 }
 
 int index_load(Index *index) {
-    index->count = 0; // Phase 3: count reset; entries parsed from mode hex mtime size path format
+    index->count = 0; // Phase 3: count reset, hex_to_hash converts stored hex back to ObjectID
     FILE *f = fopen(INDEX_FILE, "r");
     if (!f) return 0;
     char line[800];
