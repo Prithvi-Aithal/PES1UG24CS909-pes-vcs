@@ -87,7 +87,7 @@ int object_write(ObjectType type, const void *data, size_t len, ObjectID *id_out
     snprintf(path, sizeof(path), "%s/%.2s/%s", OBJECTS_DIR, hex, hex + 2);
     snprintf(tmp,  sizeof(tmp),  "%s.tmp",     path);
 
-    // 7. Create shard directory
+    // Phase 1: create shard dir .pes/objects/XX/ for sharded storage
     mkdir(dir, 0755);
 
     // 8. Write to temp file
