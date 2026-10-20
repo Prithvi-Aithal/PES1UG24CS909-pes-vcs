@@ -18,3 +18,10 @@ test_tree
 .idea/
 
 
+
+# Scratch files from manual testing
+hello.txt
+bye.txt
+file.txt
+file1.txt
+file2.txt
