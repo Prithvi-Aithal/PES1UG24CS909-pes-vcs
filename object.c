@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <openssl/sha.h>
+#include <openssl/evp.h>
 
 // ─── PROVIDED ────────────────────────────────────────────────────────────────
 
@@ -29,10 +29,9 @@ int hex_to_hash(const char *hex, ObjectID *id_out) {
 }
 
 void compute_hash(const void *data, size_t len, ObjectID *id_out) {
-    SHA256_CTX ctx;
-    SHA256_Init(&ctx);
-    SHA256_Update(&ctx, data, len);
-    SHA256_Final(id_out->hash, &ctx);
+    // EVP is OpenSSL 3's supported API; the SHA256_* calls are deprecated
+    unsigned int out_len = 0;
+    EVP_Digest(data, len, id_out->hash, &out_len, EVP_sha256(), NULL);
 }
 
 void object_path(const ObjectID *id, char *path_out, size_t path_size) {

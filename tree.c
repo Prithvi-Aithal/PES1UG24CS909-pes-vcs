@@ -118,7 +118,8 @@ static int write_tree_level(IndexEntry *entries, int count,
             // It's a subdirectory — collect all entries in this subdir
             size_t dirname_len = slash - rel;
             char dirname[256];
-            strncpy(dirname, rel, dirname_len);
+            if (dirname_len >= sizeof(dirname)) return -1;  // name too long
+            memcpy(dirname, rel, dirname_len);
             dirname[dirname_len] = '\0';
 
             // Build new prefix for recursion
@@ -142,8 +143,7 @@ static int write_tree_level(IndexEntry *entries, int count,
             TreeEntry *te = &tree.entries[tree.count++];
             te->mode = MODE_DIR;
             te->hash = sub_id;
-            strncpy(te->name, dirname, sizeof(te->name) - 1);
-            te->name[sizeof(te->name) - 1] = '\0';
+            memcpy(te->name, dirname, dirname_len + 1);  // dirname fits: both are 256 bytes
 
             i += sub_count;
         }

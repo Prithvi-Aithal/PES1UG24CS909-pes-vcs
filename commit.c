@@ -41,7 +41,7 @@ int commit_parse(const void *data, size_t len, Commit *commit_out) {
     if (!last_space) return -1;
     ts = (uint64_t)strtoull(last_space + 1, NULL, 10);
     *last_space = '\0';
-    strncpy(commit_out->author, author_buf, sizeof(commit_out->author) - 1);
+    memcpy(commit_out->author, author_buf, strlen(author_buf) + 1);  // %255 keeps it in bounds
     commit_out->timestamp = ts;
 
     p = strchr(p, '\n') + 1; // skip author
@@ -132,7 +132,7 @@ int head_update(const ObjectID *new_commit) {
     else
         snprintf(target_path, sizeof(target_path), "%s", HEAD_FILE);
 
-    char tmp_path[512];
+    char tmp_path[sizeof(target_path) + 4];  // room for ".tmp"
     snprintf(tmp_path, sizeof(tmp_path), "%s.tmp", target_path);
 
     f = fopen(tmp_path, "w");
